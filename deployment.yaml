@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: example-app
+  name: test-app
   labels:
-    app: example-app
+    app: test-app
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: example-app
+      app: test-app
   template:
     metadata:
       labels:
-        app: example-app
+        app: test-app
     spec:
       containers:
-        - name: example-app
-          image: your-dockerhub-username/your-app-name:latest
+        - name: test-app
+          image: sem6persproject/test:latest
           ports:
             - containerPort: 3000
