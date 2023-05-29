@@ -1,0 +1,39 @@
+pipeline {
+  agent any
+
+  stages {
+    stage('Checkout') {
+      steps {
+        checkout scm
+      }
+    }
+
+    stage('Build') {
+      steps {
+        sh 'npm install'
+      }
+    }
+
+    stage('Test') {
+      steps {
+        sh 'npm test'
+      }
+    }
+
+    stage('Docker Build') {
+      steps {
+        sh 'docker build -t your-dockerhub-username/your-app-name .'
+        sh 'docker push your-dockerhub-username/your-app-name'
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        kubernetesDeploy(
+          kubeconfigId: 'your-kubeconfig-id',
+          configs: 'kubernetes/*.yaml'
+        )
+      }
+    }
+  }
+}
